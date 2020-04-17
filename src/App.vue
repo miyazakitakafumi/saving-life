@@ -45,7 +45,8 @@ export default {
     //
   },
   data: () => ({
-    //
+    // TODO 必要がない場合は削除すること
+    drawer: false
   }),
   methods: {
     move: function(path){

@@ -10,6 +10,7 @@
 
 <script>
 import SavingItemCard from '../components/SavingItemCard'
+
 export default {
   name: 'Home',
   components: { SavingItemCard },
