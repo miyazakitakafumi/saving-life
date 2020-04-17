@@ -1,40 +1,41 @@
 <template>
   <v-row>
     <v-col>
-      <v-card
-              class="mx-auto"
-              max-width="344"
-              outlined
-      >
-        <v-list-item three-line>
-          <v-list-item-content>
-            <div class="overline mb-4">OVERLINE</div>
-            <v-list-item-title class="headline mb-1">Headline 5</v-list-item-title>
-            <v-list-item-subtitle>Greyhound divisely hello coldly fonwderfully</v-list-item-subtitle>
-          </v-list-item-content>
-
-          <v-list-item-avatar
-                  tile
-                  size="80"
-                  color="grey"
-          ></v-list-item-avatar>
-        </v-list-item>
-
-        <v-card-actions>
-          <v-btn text>Button</v-btn>
-          <v-btn text>Button</v-btn>
-        </v-card-actions>
-      </v-card>
+      <saving-item-card v-for="(item, key) in savingItems" :saving-item="item" :key="key" :saving-item-key="key" @remove="removeItem"/>
     </v-col>
-    <v-col>bbb</v-col>
-    <v-col>ccc</v-col>
-    <v-col>ddd</v-col>
+    <v-col>
+    </v-col>
   </v-row>
 </template>
 
 <script>
+import SavingItemCard from '../components/SavingItemCard'
 export default {
   name: 'Home',
-  components: {},
+  components: { SavingItemCard },
+  data: () => ({
+    savingItems: [
+      {
+        productName: 'お茶',
+        category: '飲料',
+        price: 130
+      },
+      {
+        productName: 'コーラ',
+        category: '飲料',
+        price: 150
+      },
+      {
+        productName: '水',
+        category: '飲料',
+        price: 100
+      },
+    ]
+  }),
+  methods: {
+    removeItem: function(key){
+      this.savingItems = this.savingItems.filter((d, k) => k !== key)
+    }
+  }
 }
 </script>
