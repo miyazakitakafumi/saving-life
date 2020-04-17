@@ -1,11 +1,23 @@
 <template>
-  <v-row>
-    <v-col>
-      <saving-item-card v-for="(item, key) in savingItems" :saving-item="item" :key="key" :saving-item-key="key" @remove="removeItem"/>
-    </v-col>
-    <v-col>
-    </v-col>
-  </v-row>
+  <v-container class="fill-height" fluid>
+    <v-row>
+      <v-col>
+        Total: {{sum}}
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col>
+        <saving-item-card
+          v-for="(item, key) in savingItems"
+          :saving-item="item"
+          :key="key"
+          :saving-item-key="key"
+          @remove="removeItem"
+        />
+      </v-col>
+      <v-col> </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
@@ -30,12 +42,19 @@ export default {
         productName: '水',
         category: '飲料',
         price: 100
-      },
+      }
     ]
   }),
   methods: {
-    removeItem: function(key){
+    removeItem: function(key) {
       this.savingItems = this.savingItems.filter((d, k) => k !== key)
+    }
+  },
+  computed: {
+    sum: function() {
+      return this.savingItems.reduce((prev, current) => {
+        return prev + (parseInt(current.price) || 0)
+      }, 0)
     }
   }
 }

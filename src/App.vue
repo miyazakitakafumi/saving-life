@@ -27,9 +27,7 @@
     </v-app-bar>
 
     <v-content>
-      <v-container class="fill-height" fluid>
-        <router-view />
-      </v-container>
+      <router-view />
     </v-content>
 
     <v-footer color="indigo" app>
@@ -49,7 +47,7 @@ export default {
     drawer: false
   }),
   methods: {
-    move: function(path){
+    move: function(path) {
       this.$router.push(path)
     }
   }
