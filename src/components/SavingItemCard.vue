@@ -10,8 +10,20 @@
           <v-text-field
             label="price"
             type="number"
-            v-model="savingItem.price"
+            :value="savingItem.price"
+            @input="changePrice"
           ></v-text-field>
+          <input
+            type="number"
+            :value="savingItem.price"
+            @input="
+              $emit('updatePrice', {
+                value: $event.target.value,
+                index: savingItemKey
+              })
+            "
+          />
+          <input type="number" v-model="savingItem.price" /> <br />
         </v-list-item-subtitle>
       </v-list-item-content>
     </v-list-item>
@@ -26,13 +38,17 @@
 <script>
 export default {
   name: 'SavingItemCard',
-  props: ['savingItem', 'savingItemKey'],
+  props: ['savingItem', 'savingItemKey', 'func'],
   data: () => ({
     //
   }),
   methods: {
     remove: function() {
       this.$emit('remove', this.savingItemKey)
+    },
+    changePrice: function(value) {
+      console.log('v', value)
+      this.func(value)
     }
   }
 }

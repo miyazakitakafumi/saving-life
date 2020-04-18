@@ -1,9 +1,7 @@
 <template>
   <v-container class="fill-height" fluid>
     <v-row>
-      <v-col>
-        Total: {{sum}}
-      </v-col>
+      <v-col> Total: {{ sum }} </v-col>
     </v-row>
     <v-row>
       <v-col>
@@ -12,20 +10,25 @@
           :saving-item="item"
           :key="key"
           :saving-item-key="key"
+          :func="updatePriceCurry(key)"
           @remove="removeItem"
+          @updatePrice="updatePrice"
         />
       </v-col>
-      <v-col> </v-col>
+      <v-col>
+        <test />
+      </v-col>
     </v-row>
   </v-container>
 </template>
 
 <script>
 import SavingItemCard from '../components/SavingItemCard'
+import Test from '../components/Test'
 
 export default {
   name: 'Home',
-  components: { SavingItemCard },
+  components: { SavingItemCard, Test },
   data: () => ({
     savingItems: [
       {
@@ -48,6 +51,23 @@ export default {
   methods: {
     removeItem: function(key) {
       this.savingItems = this.savingItems.filter((d, k) => k !== key)
+    },
+    updatePrice: function(update) {
+      console.log(update)
+    },
+    updatePriceCurry(idx) {
+      return function(value) {
+        console.log('this', this)
+        this.savingItems = this.savingItems.map((d, k) => {
+          if (k === idx)
+            return {
+              ...d,
+              price: value
+            }
+
+          return d
+        })
+      }
     }
   },
   computed: {
