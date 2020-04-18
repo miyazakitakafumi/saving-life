@@ -2,28 +2,14 @@
   <v-card max-width="344" outlined>
     <v-list-item>
       <v-list-item-content>
-        <div class="overline mb-4">{{ savingItem.category }}</div>
-        <v-list-item-title class="headline mb-1">{{
-          savingItem.productName
-        }}</v-list-item-title>
+        <div class="overline mb-4">{{ category }}</div>
+        <v-list-item-title class="headline mb-1">{{ name }}</v-list-item-title>
         <v-list-item-subtitle>
           <v-text-field
             label="price"
             type="number"
-            :value="savingItem.price"
-            @input="changePrice"
+            v-model="price"
           ></v-text-field>
-          <input
-            type="number"
-            :value="savingItem.price"
-            @input="
-              $emit('updatePrice', {
-                value: $event.target.value,
-                index: savingItemKey
-              })
-            "
-          />
-          <input type="number" v-model="savingItem.price" /> <br />
         </v-list-item-subtitle>
       </v-list-item-content>
     </v-list-item>
@@ -38,17 +24,35 @@
 <script>
 export default {
   name: 'SavingItemCard',
-  props: ['savingItem', 'savingItemKey', 'func'],
-  data: () => ({
-    //
-  }),
-  methods: {
-    remove: function() {
-      this.$emit('remove', this.savingItemKey)
+  props: ['item', 'index'],
+  computed: {
+    name: {
+      get() {
+        return this.$props.item.productName
+      },
+      set() {}
     },
-    changePrice: function(value) {
-      console.log('v', value)
-      this.func(value)
+    category: {
+      get() {
+        return this.$props.item.category
+      },
+      set() {}
+    },
+    price: {
+      get() {
+        return this.$props.item.price
+      },
+      set(price) {
+        this.updateValue({ ...this.$props.item, price })
+      }
+    }
+  },
+  methods: {
+    remove() {
+      this.$emit('remove', this.index)
+    },
+    updateValue(value) {
+      this.$emit('input', { value, index: this.$props.index })
     }
   }
 }

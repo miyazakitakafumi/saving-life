@@ -10,9 +10,8 @@
           :saving-item="item"
           :key="key"
           :saving-item-key="key"
-          :func="updatePriceCurry(key)"
           @remove="removeItem"
-          @updatePrice="updatePrice"
+          @input="updateSavingItems"
         />
       </v-col>
       <v-col>
@@ -52,22 +51,15 @@ export default {
     removeItem: function(key) {
       this.savingItems = this.savingItems.filter((d, k) => k !== key)
     },
-    updatePrice: function(update) {
-      console.log(update)
-    },
-    updatePriceCurry(idx) {
-      return function(value) {
-        console.log('this', this)
-        this.savingItems = this.savingItems.map((d, k) => {
-          if (k === idx)
-            return {
-              ...d,
-              price: value
-            }
-
-          return d
-        })
-      }
+    updateSavingItems(updateObj) {
+      this.savingItems = this.savingItems.map((item, index) => {
+        if (index === updateObj.index)
+          return {
+            ...item,
+            ...updateObj.value
+          }
+        return item
+      })
     }
   },
   computed: {
